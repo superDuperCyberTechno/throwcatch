@@ -1,0 +1,112 @@
+#!/bin/bash
+
+function valid_ip()
+{
+    local  ip=$1
+    local  stat=1
+
+    if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+        OIFS=$IFS
+        IFS='.'
+        ip=($ip)
+        IFS=$OIFS
+        [[ ${ip[0]} -le 255 && ${ip[1]} -le 255 \
+            && ${ip[2]} -le 255 && ${ip[3]} -le 255 ]]
+        stat=$?
+    fi
+    return $stat
+}
+
+if [ "$1" = "--remove" ];then
+    #create the catchers array to keep track of the users
+    catchers=()
+    #create an index var
+    index=0
+
+    #read the sshd_config file for entries
+    while IFS= read -r line
+    do
+        ((index++))
+        catchers[$index]=${line:16}
+        echo "$index. ${line:16}"
+    done < <(grep "#throwcatchuser" /etc/ssh/sshd_config)
+
+    if [[ $index -eq 0 ]];then
+        echo "No users to remove."
+        exit 1
+    fi
+
+    while [[ ! $catcher ]] || [[ $catcher -lt 1 ]] || [[ $catcher -gt $index ]];do
+        read -p 'Choose a catcher from the list to delete: ' catcher
+    done
+
+    #fetch the username
+    username="${catchers[$catcher]%%@*}"
+    #delete tghe user from /etc/passwd
+    userdel $username
+    #remove the users folder
+    rm -rf /home/$username
+
+    #remove the entry in the sshd_config file
+    sed -i "/\#throwcatchuser ${catchers[$catcher]}/,/\#\/throwcatchuser ${catchers[$catcher]}/d" /etc/ssh/sshd_config
+
+    #restart sshd
+    service sshd restart
+
+    echo "${catchers[$catcher]} removed..."
+
+    exit 1
+fi
+    
+# this is effectively how to tell if this is the first run
+if ! grep -q '^ssh$' /etc/securetty;then
+    printf "\nssh" >> /etc/securetty
+    cp /etc/ssh/sshd_config /etc/ssh/sshd_config_ORIG
+fi
+
+#prompt for thrower username
+read -p $'What\'s the name of your new thrower?\n' name
+while [[ ! $name || $(id -u $name > /dev/null 2>&1; echo $?) -eq 0 ]];do
+    read -p $'Please choose a valid name...\n' name
+done
+
+#prompt for thrower ip
+read -p $'What\'s the IP address of your new thrower?\n' ip
+while ! valid_ip $ip;do
+    read -p $'Please provide a valid IP address...\n' ip
+done
+
+exists=0
+while IFS= read -r line
+do
+    ((exists++))
+done < <(grep "#throwcatchuser $name@$ip" /etc/ssh/sshd_config)
+
+if [[ $exists -gt 0 ]];then
+    echo "$name@$ip already exists"
+    exit 1
+fi
+
+useradd $name
+passwd -d $name
+mkdir /home/$name
+mkdir /home/$name/catches
+chown $name.$name /home/$name/catches
+chmod 700 /home/$name/catches
+
+echo "#throwcatchuser $name@$ip" >> /etc/ssh/sshd_config
+echo "#IF YOU DELETE THE ABOVE LINE, catch WON'T BE ABLE TO REMOVE THE USER FROM THIS CONFIG FILE" >> /etc/ssh/sshd_config
+echo "Match User $name Address $ip" >> /etc/ssh/sshd_config
+echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+echo "PermitEmptyPasswords yes" >> /etc/ssh/sshd_config
+echo "PubkeyAuthentication no" >> /etc/ssh/sshd_config
+echo "ChrootDirectory /home/$name" >> /etc/ssh/sshd_config
+echo "ForceCommand internal-sftp -p open,close,write,stat,realpath" >> /etc/ssh/sshd_config
+echo "PermitTunnel no" >> /etc/ssh/sshd_config
+echo "AllowAgentForwarding no" >> /etc/ssh/sshd_config
+echo "AllowTcpForwarding no" >> /etc/ssh/sshd_config
+echo "x11Forwarding no" >> /etc/ssh/sshd_config
+echo "#IF YOU DELETE THE BELOW LINE, catch WON'T BE ABLE TO REMOVE THE USER FROM THIS CONFIG FILE" >> /etc/ssh/sshd_config
+echo "#/throwcatchuser $name@$ip" >> /etc/ssh/sshd_config
+
+service sshd reload

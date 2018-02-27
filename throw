@@ -1,0 +1,46 @@
+#!/bin/bash
+
+thrower=
+catcher=
+
+if [ "$1" = "--reset" ];then
+        sed -i "s/^thrower\=.*$/thrower\=/" throw
+        sed -i "s/^catcher\=.*$/catcher\=/" throw
+        echo "Configuration reset, run again with no arguments to set it up again."
+        exit 0
+fi
+
+if [ ! $thrower ] || [ ! $catcher ];then
+    if [ ! $thrower ];then
+        read -p $'Whats the name of this thrower?\n' t
+        while [[ ! $t ]];do
+            read -p $'Please provide name of thrower, dude...\n' t
+        done
+
+        sed -i "s/^thrower\=$/thrower\=$t/" throw
+    fi
+
+    if [ ! $catcher ];then
+        read -p $'Whats the IP or domain of your catcher?\n' c
+        while [[ ! $c ]];do
+            read -p $'Please provide domain of catcher, dude...\n' c
+        done
+
+        sed -i "s/^catcher\=$/catcher\=$c/" throw
+
+        echo "Nice! Please run throw again to throw files!"
+    fi
+    exit 0
+fi
+
+echo ""
+#iterate through all arguments
+for var in "$@";do
+    #iterate through all permutations of arguments
+    for file in $var;do
+        #share the good news!
+        echo "Throwing $file!"
+        #append uuid to file name to remove collisions
+        echo "put -rp $file $file\_$(uuidgen)" | sftp -b - $thrower@$catcher:catches > /dev/null
+    done
+done
