@@ -76,6 +76,7 @@ while ! valid_ip $ip;do
     read -p $'Please provide a valid IP address...\n' ip
 done
 
+#check if the user already exists, if it does, kill the process
 exists=0
 while IFS= read -r line
 do
@@ -87,13 +88,19 @@ if [[ $exists -gt 0 ]];then
     exit 1
 fi
 
+#add the user
 useradd $name
+#set the passwd to nothing
 passwd -d $name
+#make the home folder
 mkdir /home/$name
+#make the catches folder
 mkdir /home/$name/catches
+#set up the rights for the catches folder
 chown $name.$name /home/$name/catches
 chmod 700 /home/$name/catches
 
+echo "" >> /etc/ssh/sshd_config
 echo "#throwcatchuser $name@$ip" >> /etc/ssh/sshd_config
 echo "#IF YOU DELETE THE ABOVE LINE, catch WON'T BE ABLE TO REMOVE THE USER FROM THIS CONFIG FILE" >> /etc/ssh/sshd_config
 echo "Match User $name Address $ip" >> /etc/ssh/sshd_config
@@ -101,7 +108,7 @@ echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 echo "PermitEmptyPasswords yes" >> /etc/ssh/sshd_config
 echo "PubkeyAuthentication no" >> /etc/ssh/sshd_config
 echo "ChrootDirectory /home/$name" >> /etc/ssh/sshd_config
-echo "ForceCommand internal-sftp -p open,close,write,stat,realpath" >> /etc/ssh/sshd_config
+echo "ForceCommand internal-sftp -p open,close,write,stat,realpath,fsetstat" >> /etc/ssh/sshd_config
 echo "PermitTunnel no" >> /etc/ssh/sshd_config
 echo "AllowAgentForwarding no" >> /etc/ssh/sshd_config
 echo "AllowTcpForwarding no" >> /etc/ssh/sshd_config
@@ -109,4 +116,4 @@ echo "x11Forwarding no" >> /etc/ssh/sshd_config
 echo "#IF YOU DELETE THE BELOW LINE, catch WON'T BE ABLE TO REMOVE THE USER FROM THIS CONFIG FILE" >> /etc/ssh/sshd_config
 echo "#/throwcatchuser $name@$ip" >> /etc/ssh/sshd_config
 
-service sshd reload
+service sshd restart

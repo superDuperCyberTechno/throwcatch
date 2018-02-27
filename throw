@@ -12,7 +12,7 @@ fi
 
 if [ ! $thrower ] || [ ! $catcher ];then
     if [ ! $thrower ];then
-        read -p $'Whats the name of this thrower?\n' t
+        read -p $'What\'s the name of this thrower?\n' t
         while [[ ! $t ]];do
             read -p $'Please provide name of thrower, dude...\n' t
         done
@@ -21,7 +21,7 @@ if [ ! $thrower ] || [ ! $catcher ];then
     fi
 
     if [ ! $catcher ];then
-        read -p $'Whats the IP or domain of your catcher?\n' c
+        read -p $'What\'s the IP or domain of your catcher?\n' c
         while [[ ! $c ]];do
             read -p $'Please provide domain of catcher, dude...\n' c
         done
