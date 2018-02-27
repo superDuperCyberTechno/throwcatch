@@ -3,7 +3,7 @@
 # throwcatch is a super simple tool made for backing up files to a server.
 
 ## What the hell is this?
-*throwcatch* is an experimental solution to something that shouldn't be as cumbersome as it is; **backups**.
+*throwcatch* is an experimental solution to something that shouldn't be as cumbersome as it is; **backups**. In other words: *throwcatch* is a super simple tool made for backing up files to a server.
 
 ### Technicalities
 *throwcatch* (more precisely `catch`) manipulates the `/etc/ssh/sshd_config` file as well as sets up a closed home folder where the *throwers* are locked into. All backed up files (called *catches* here on out) are stored in the `/home/[catcher name]/catches` folders.
