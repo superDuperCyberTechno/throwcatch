@@ -1,23 +1,32 @@
 ![throwcatch](https://raw.githubusercontent.com/superDuperCyberTechno/rockatansky/master/header.pn://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/header.png)
 
-## throwcatch is a super simple tool made for backing up files to a server.
+# throwcatch is a super simple tool made for backing up files to a server.
 
-The software consists of 2 files:
+## What the hell is this?
+*throwcatch* is an experimental solution to something that shouldn't be as cumbersome as it is; **backups**.
+
+### Technicalities
+*throwcatch* (more precisely `catch`) manipulates the `/etc/ssh/sshd_config` file as well as sets up a closed home folder where the *throwers* are locked into. All backed up files (called *catches* here on out) are stored in the `/home/[catcher name]/catches` folders.
+
+*throwers* are given restricted access to a sftp process that has been locked down to a minimum of privileges; they can basically only upload files.
+
+The real magic and potentially the biggest security flaw is the way the authentication has been set up; `catchers` are **only** authenticated based on username and IP.
+
+## The software
+
+The software consists of 2 files that need to be run in order for throwcatch to function:
 
 ### throw
 `throw` is located on the machine that wants to do the backing up. In order for it to function properly, it needs to know 2 things.
 
-* `thrower` is the user that was created with `catch` on the backup server.
-* `catcher` is the IP or domain name of the backup server (where `catch` is located).
+* Its own username that was created with `catch` on the backup server.
+* The IP or domain name of the backup server (where `catch` is located).
 
-To set it up, simply run the file 
+To set it up, simply run the file:
 
 ```
 ./throw
-
 ```
-
-... and you will be prompted for the name of the thrower and the URL/Ip of the catcher.
 
 Assuming these 2 variables are valid, throw can do its magic.
 
@@ -31,18 +40,32 @@ Smack that enter key and these 4 files will be thrown at you catcher, who will t
 
 `./throw stone* rock.sql`
 
+If you need to change the credentials, reset the file like this:
+
+```
+./throw --reset
+```
+
+That will delete the current credentials, allowing you to set it up once again.
+
 ### catch
-`catch` is installed on the server you want to keep the backups. but you need to run it in order for the server to be able to catch stuff:
+`catch` is located on the server you want to keep the backups. In order for the server to function properly, it needs to know 2 things:
+
+* The username for the new catcher.
+* The new catcher's IP address.
+
+To set it up, simply run the file:
 
 ```
 ./catch
 ```
 
-Now, you will be prompted to give `catch` 2 variables: 
+When these have been supplied, the server will be ready to catch! You can run `catch` again to add more throwers.
 
-* `thrower` is the user that was created with `catch` on the backup server.
-* `catcher` is the IP or domain name of the backup server (where `catch` is located).
+If you need to remove a thrower, run the following command:
 
-A name of a thrower and the IP address of said thrower. Throwers are authorized solely based on their username and their IP's.
+```
+./catch --remove
+```
 
-When these have been supplied, the server will be ready to catch!
+You will then be guided through the process to remove throwers.
