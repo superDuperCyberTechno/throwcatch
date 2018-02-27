@@ -10,13 +10,14 @@ The software consists of 2 files:
 * `thrower` is the user that was created with `catch` on the backup server.
 * `catcher` is the IP or domain name of the backup server (where `catch` is located).
 
-This is located inside the file.
+To set it up, simply run the file 
 
-An example hereof is below:
 ```
-thrower=mac
-catcher=christmastrain.com
+./throw
+
 ```
+
+... and you will be prompted for the name of the thrower and the URL/Ip of the catcher.
 
 Assuming these 2 variables are valid, throw can do its magic.
 
@@ -33,8 +34,15 @@ Smack that enter key and these 4 files will be thrown at you catcher, who will t
 ### catch
 `catch` is installed on the server you want to keep the backups. but you need to run it in order for the server to be able to catch stuff:
 
-`./catch`
+```
+./catch
+```
 
-Now, you will be prompted to give `catch` 2 variables: A name of a thrower and the IP address of said thrower.
+Now, you will be prompted to give `catch` 2 variables: 
+
+* `thrower` is the user that was created with `catch` on the backup server.
+* `catcher` is the IP or domain name of the backup server (where `catch` is located).
+
+A name of a thrower and the IP address of said thrower. Throwers are authorized solely based on their username and their IP's.
 
 When these have been supplied, the server will be ready to catch!
