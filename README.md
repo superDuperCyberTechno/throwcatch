@@ -5,6 +5,8 @@
 
 The mnemonic is simple: *throw* files, the server will *catch* them.
 
+It is written in bash.
+
 ### Technicalities
 *throwcatch* (more precisely `catch`) manipulates the `/etc/ssh/sshd_config` file as well as sets up a closed home folder where the *throwers* are locked into. All backed up files (called *catches* here on out) are stored in the `/home/[catcher name]/catches` folders.
 
