@@ -1,4 +1,4 @@
-![throwcatch](https://raw.githubusercontent.com/superDuperCyberTechno/rockatansky/master/header.pn://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/header.png)
+![throwcatch](https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/header.png)
 
 ## What the hell is this?
 *throwcatch* is an experimental solution to something that shouldn't be as cumbersome as it is; **backups**. In other words: *throwcatch* is a super simple tool made for backing up files to a server.
