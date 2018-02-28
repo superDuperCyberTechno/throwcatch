@@ -8,9 +8,9 @@ The mnemonic is simple: *throw* files, the server will *catch* them.
 ### Technicalities
 *throwcatch* (more precisely `catch`) manipulates the `/etc/ssh/sshd_config` file as well as sets up a closed home folder where the *throwers* are locked into. All backed up files (called *catches* here on out) are stored in the `/home/[catcher name]/catches` folders.
 
-*throwers* are given restricted access to a sftp process that has been locked down to a minimum of privileges; they can basically only upload files.
+*throwers* are given restricted access to a sftp process that has been locked down to a minimum of privileges; they can basically only upload files. All files that have been *thrown* to the *catcher* will have a UUID appended to the file name to avoid collisions. That also means that identical files can co-exist.
 
-The real magic and potentially the biggest security flaw is the way the authentication has been set up; *throwers* are **only** authenticated based on username and IP.
+**A word of warning**: As stated before, this is experimental and made mostly for fun. - The real magic and **potentially the biggest security flaw** is the way the authentication has been set up; *throwers* are **only** authenticated based on username and IP. I would love some feedback on the risks here since I am not a security expert. Use this at your own risk.
 
 ## The software
 
@@ -70,6 +70,8 @@ If you need to remove a *thrower*, run the following command:
 
 You will then be guided through the process to remove *thrower*s.
 
+
+
 ## Installation
 To install `throw` simply run the following command:
 
@@ -83,4 +85,4 @@ To install `catch` simply run the this command:
 wget https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/catch && chmod +x catch
 ```
 
-`throwcatch` has only been tested to work on Ubuntu but since it's written in Bash, it should be pretty distro agnostic.
+*throwcatch* has only been tested to work on Ubuntu but since it's written in Bash, it should be pretty distro agnostic.
