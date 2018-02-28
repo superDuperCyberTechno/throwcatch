@@ -48,8 +48,8 @@ If you need to change the credentials, reset the file like this:
 
 That will delete the current credentials, allowing you to set it up once again.
 
-### catch
-`catch` is located on the server you want to keep the backups. In order for the server to catch files properly, we need to add a *thrower* by supplying 2 variables:
+### `catch`
+`catch` is located on the server where you want to keep the backups. In order for the server to catch/receive files properly, we need to add a *thrower* by supplying 2 variables:
 
 * The username for the new *thrower*.
 * The new *thrower*'s IP address.
@@ -69,3 +69,18 @@ If you need to remove a *thrower*, run the following command:
 ```
 
 You will then be guided through the process to remove *thrower*s.
+
+## Installation
+To install `throw` simply run the following command:
+
+```
+wget https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/throw && chmod +x throw
+```
+
+To install `catch` simply run the this command:
+
+```
+wget https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/catch && chmod +x catch
+```
+
+`throwcatch` has only been tested to work on Ubuntu but since it's written in Bash, it should be pretty distro agnostic.
