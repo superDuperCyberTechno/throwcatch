@@ -3,22 +3,24 @@
 ## What the hell is this?
 *throwcatch* is an experimental solution to something that shouldn't be as cumbersome as it is; **backups**. In other words: *throwcatch* is a super simple tool made for backing up files to a server.
 
+The mnemonic is simple: *throw* files, the server will *catch* them.
+
 ### Technicalities
 *throwcatch* (more precisely `catch`) manipulates the `/etc/ssh/sshd_config` file as well as sets up a closed home folder where the *throwers* are locked into. All backed up files (called *catches* here on out) are stored in the `/home/[catcher name]/catches` folders.
 
 *throwers* are given restricted access to a sftp process that has been locked down to a minimum of privileges; they can basically only upload files.
 
-The real magic and potentially the biggest security flaw is the way the authentication has been set up; `catchers` are **only** authenticated based on username and IP.
+The real magic and potentially the biggest security flaw is the way the authentication has been set up; *throwers* are **only** authenticated based on username and IP.
 
 ## The software
 
 The software consists of 2 files that need to be run in order for throwcatch to function:
 
-### throw
+### `throw`
 `throw` is located on the machine that wants to do the backing up. In order for it to function properly, it needs to know 2 things.
 
 * Its own username that was created with `catch` on the backup server.
-* The IP or domain name of the backup server (where `catch` is located).
+* The IP or domain name of the catch/backup server (where `catch` is located).
 
 To set it up, simply run the file:
 
@@ -47,10 +49,10 @@ If you need to change the credentials, reset the file like this:
 That will delete the current credentials, allowing you to set it up once again.
 
 ### catch
-`catch` is located on the server you want to keep the backups. In order for the server to function properly, it needs to know 2 things:
+`catch` is located on the server you want to keep the backups. In order for the server to catch files properly, we need to add a *thrower* by supplying 2 variables:
 
-* The username for the new catcher.
-* The new catcher's IP address.
+* The username for the new *thrower*.
+* The new *thrower*'s IP address.
 
 To set it up, simply run the file:
 
@@ -58,12 +60,12 @@ To set it up, simply run the file:
 ./catch
 ```
 
-When these have been supplied, the server will be ready to catch! You can run `catch` again to add more throwers.
+When these have been supplied, the server will be ready to catch files! You can run `catch` again to add more *thrower*s.
 
-If you need to remove a thrower, run the following command:
+If you need to remove a *thrower*, run the following command:
 
 ```
 ./catch --remove
 ```
 
-You will then be guided through the process to remove throwers.
+You will then be guided through the process to remove *thrower*s.
