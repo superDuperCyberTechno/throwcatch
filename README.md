@@ -56,7 +56,7 @@ That will delete the current credentials, allowing you to set it up once again.
 * The username for the new *thrower*.
 * The new *thrower*'s IP address.
 
-To set it up, simply run the file:
+To set it up, simply run the file (needs to be done with root privileges):
 
 ```
 ./catch
