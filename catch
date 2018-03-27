@@ -97,7 +97,7 @@ mkdir /home/$name
 #make the catches folder
 mkdir /home/$name/catches
 #set up the rights for the catches folder
-chown $name.$name /home/$name/catches
+chown $name:$name /home/$name/catches
 chmod 700 /home/$name/catches
 
 echo "" >> /etc/ssh/sshd_config
