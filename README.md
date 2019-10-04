@@ -1,5 +1,7 @@
 ![throwcatch](https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/header.png)
 
+# Any and all help is appreciated. Please feel free to contribute.
+
 ## What the hell is this?
 *throwcatch* is an experimental solution to something that shouldn't be as cumbersome as it is; **backups**. In other words: *throwcatch* is a super simple tool made for backing up files to a server.
 
@@ -91,7 +93,7 @@ wget https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/c
 
 ## Other stuff
 ### Backup expiry
-If you want to have backups expire you can add the following cron job:
+If you want to have backups expire you can add the following cron job on your backup server:
 
 ```
 0 0 * * * find /home/*/catches -mtime +10 -type f -delete
@@ -100,7 +102,7 @@ If you want to have backups expire you can add the following cron job:
 Every 24 hours (at midnight), this will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: _Any_ folder in your users' home directory called `catches` it will be purged as well when the above cron job runs.__
 
 ### Firewall
-As SFTP piggybacks on SSH, you should only allow SSH connections on your backup server. - This will also conveniently allow you to log into the server using SSH. This can be achieved using `ufw`:
+As SFTP piggybacks on SSH, you should only allow SSH connections on your backup server (assuming that's all you need). - This will also conveniently allow you to log into the server using SSH. This can be achieved using `ufw`:
 
 ```
 ufw allow ssh && ufw enable
