@@ -88,3 +88,12 @@ wget https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/c
 ```
 
 *throwcatch* has only been tested to work on Ubuntu but since it's written in Bash, it should be pretty distro agnostic.
+
+## Other stuff
+If you want to have backups expire you can add the following cron job:
+
+```
+find /home/*/catches -mtime +10 -type f -delete
+```
+
+This will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable.
