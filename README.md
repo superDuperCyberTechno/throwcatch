@@ -94,10 +94,10 @@ wget https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/c
 If you want to have backups expire you can add the following cron job:
 
 ```
-find /home/*/catches -mtime +10 -type f -delete
+0 0 * * * find /home/*/catches -mtime +10 -type f -delete
 ```
 
-This will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: _Any_ folder in your users' home directory called `catches` it will be purged as well when the above cron job runs.__
+Every 24 hours (at midnight), this will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: _Any_ folder in your users' home directory called `catches` it will be purged as well when the above cron job runs.__
 
 ### Firewall
 As SFTP piggybacks on SSH, you should only allow SSH connections on your backup server. - This will also conveniently allow you to log into the server using SSH. This can be achieved using `ufw`:
