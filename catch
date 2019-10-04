@@ -100,6 +100,7 @@ chown $name:$name /home/$name/catches
 chmod 700 /home/$name/catches
 
 cat << EOF >> /etc/ssh/sshd_config
+
 #throwcatchuser $name@$ip
 #IF YOU DELETE THE ABOVE LINE, catch WON'T BE ABLE TO REMOVE THE USER FROM THIS CONFIG FILE
 Match User $name Address $ip
