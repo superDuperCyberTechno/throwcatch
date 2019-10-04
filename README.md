@@ -90,10 +90,29 @@ wget https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/c
 *throwcatch* has only been tested to work on Ubuntu but since it's written in Bash, it should be pretty distro agnostic.
 
 ## Other stuff
+### Backup expiry
 If you want to have backups expire you can add the following cron job:
 
 ```
 find /home/*/catches -mtime +10 -type f -delete
 ```
 
-This will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: If _any_ user on your backup system has a folder called `catches` it will be purged as well when the above cron job runs.__
+This will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: _Any_ folder in your users' home directory called `catches` it will be purged as well when the above cron job runs.__
+
+### Firewall
+As SFTP piggybacks on SSH, you should only allow SSH connections on your backup server. - This will also conveniently allow you to log into the server using SSH. This can be achieved using `ufw`:
+
+```
+ufw allow ssh && ufw enable
+```
+
+You backup server will now deny all incoming connections except SSH (which includes SFTP).
+
+You could (and probably should) lock it down to you own IP address, __but make sure that you have a static IP address. - If you don't, you could lock yourself out from the server and lose all backups:__
+
+```
+ufw allow from [ip address] to any port 22
+```
+
+Replace `[ip address]` with your own IP address.
+__This needs to be done with all your _thrower_ IP addresses as well, otherwise they will not be able to throw files to the server.__
