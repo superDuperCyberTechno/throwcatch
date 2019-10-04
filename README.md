@@ -96,4 +96,4 @@ If you want to have backups expire you can add the following cron job:
 find /home/*/catches -mtime +10 -type f -delete
 ```
 
-This will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: If _any_ user on your system has a folder called `catches` they will be purged as well when the above cron job runs.__
+This will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: If _any_ user on your backup system has a folder called `catches` it will be purged as well when the above cron job runs.__
