@@ -1,6 +1,6 @@
 #!/bin/bash
 
-fun valid_ip()
+valid_ip ()
 {
     local  ip=$1
 
