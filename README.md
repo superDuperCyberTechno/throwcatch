@@ -12,7 +12,7 @@ It is written in bash.
 ### Technicalities
 *throwcatch* (more precisely `catch`) manipulates the `/etc/ssh/sshd_config` file as well as sets up a closed home folder where the *throwers* are locked into. All backed up files (called *catches* here on out) are stored in the `/home/[catcher name]/catches` folders.
 
-*throwers* are given restricted access to a sftp process that has been locked down to a minimum of privileges; they can basically only upload files. All files that have been *thrown* to the *catcher* will have a UUID appended to the file name to avoid collisions. That also means that identical files can co-exist.
+*throwers* are given restricted access to a `sftp` process that has been locked down to a minimum of privileges; they can basically only upload files. All files that have been *thrown* to the *catcher* will have a UUID appended to the file name to avoid collisions. That also means that identical files can co-exist.
 
 **A word of warning**: As stated before, this is experimental and made mostly for fun. - The real magic and **potentially the biggest security flaw** is the way the authentication has been set up; *throwers* are **only** authenticated based on username and IP. I would love some feedback on the risks here since I am not a security expert. Use this at your own risk.
 
@@ -108,7 +108,7 @@ As SFTP piggybacks on SSH, you should only allow SSH connections on your backup 
 ufw allow ssh && ufw enable
 ```
 
-You backup server will now deny all incoming connections except SSH (which includes SFTP).
+Your backup server will now deny all incoming connections except SSH (which includes SFTP).
 
 You could (and probably should) lock it down to you own IP address, __but make sure that you have a static IP address. - If you don't, you could lock yourself out from the server and lose all backups:__
 
