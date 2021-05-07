@@ -21,10 +21,12 @@ It is written in bash.
 The software consists of 2 files that need to be run in order for throwcatch to function:
 
 ### `throw`
-`throw` is located on the machine that wants to do the backing up. In order for it to function properly, it needs to know 2 things.
+`throw` is located on the machine that wants to do backups. In order for it to function properly, it needs to know 2 things.
 
 * Its own username that was created with `catch` on the backup server.
 * The IP or domain name of the catch/backup server (where `catch` is located).
+
+Assuming these 2 variables are valid, throw can do its magic.
 
 To set it up, simply run the file:
 
@@ -32,13 +34,11 @@ To set it up, simply run the file:
 ./throw
 ```
 
-Assuming these 2 variables are valid, throw can do its magic.
-
 In order to back up files you simply supply them as arguments to `throw`:
 
 `./throw stone.txt stone2.db stone3.conf rock.sql`
 
-Smack that enter key and these 4 files will be thrown at you catcher, who will take care of your files.
+Smack that enter key and these 4 files will be thrown at your catcher, who will then take care of your files.
 
 `throw` even supports wildcards, so the above example could be simplified to this:
 
@@ -99,7 +99,7 @@ If you want to have backups expire you can add the following cron job on your ba
 0 0 * * * find /home/*/catches -mtime +10 -type f -delete
 ```
 
-Every 24 hours (at midnight), this will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: _Any_ folder in your users' home directory called `catches` it will be purged as well when the above cron job runs.__
+Every 24 hours (at midnight), this will delete all files caught by the server if they are 10 (or more) days old. You can edit `10` to anything you find acceptable. __Beware: _Any_ folder in your users' home directory called `catches` will be purged as well when the above cron job runs.__
 
 ### Firewall
 As SFTP piggybacks on SSH, you should only allow SSH connections on your backup server (assuming that's all you need). - This will also conveniently allow you to log into the server using SSH. This can be achieved using `ufw`:
