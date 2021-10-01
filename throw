@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 thrower=
 catcher=
@@ -30,6 +30,7 @@ if [ ! $thrower ] || [ ! $catcher ];then
 
         echo "Nice! Please run throw again to throw files!"
     fi
+    
     exit 0
 fi
 
@@ -41,6 +42,9 @@ for var in "$@";do
         #share the good news!
         echo "Throwing $file!"
         #append uuid to file name to remove collisions
-        echo "put -rp $file $file\_$(uuidgen)" | sftp -b - $thrower@$catcher:catches > /dev/null
+        echo "put -rp $file $file\_$(uuidgen)" | sftp -o "StrictHostKeyChecking=no" -b - $thrower@$catcher:catches > /dev/null
+        echo "It has been done."
+        
+        exit 0
     done
 done
