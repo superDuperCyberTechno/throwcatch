@@ -1,13 +1,13 @@
 ![throwcatch](https://raw.githubusercontent.com/superDuperCyberTechno/throwcatch/master/header.png)
 
-# Any and all help is appreciated. Please feel free to contribute.
-
-## What the hell is this?
+# What the hell is this?
 *throwcatch* is an experimental solution to something that shouldn't be as cumbersome as it is; **backups**. In other words: *throwcatch* is a super simple tool made for backing up files to a server.
 
 The mnemonic is simple: *throw* files, the server will *catch* them.
 
 It is written in bash.
+
+Feel free to contribute.
 
 ### Technicalities
 *throwcatch* (more precisely `catch`) manipulates the `/etc/ssh/sshd_config` file as well as sets up a closed home folder where the *throwers* are locked into. All backed up files (called *catches* here on out) are stored in the `/home/[catcher name]/catches` folders.
