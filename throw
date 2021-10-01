@@ -3,7 +3,7 @@
 thrower=
 catcher=
 
-if [ "$1" = "--reset" ];then
+if [ "$1" = "-r" ];then
         sed -i "s/^thrower\=.*$/thrower\=/" throw
         sed -i "s/^catcher\=.*$/catcher\=/" throw
         echo "Configuration reset, run again with no arguments to set it up again."

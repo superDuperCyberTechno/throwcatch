@@ -17,7 +17,7 @@ function valid_ip()
     return $stat
 }
 
-if [ "$1" = "--remove" ];then
+if [ "$1" = "-r" ];then
     #create the catchers array to keep track of the users
     catchers=()
     #create an index var

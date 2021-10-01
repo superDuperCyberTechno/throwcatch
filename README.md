@@ -45,7 +45,7 @@ Smack that enter key and these 4 files will be thrown at you catcher, who will t
 If you need to change the credentials, reset the file like this:
 
 ```
-./throw --reset
+./throw -r
 ```
 
 That will delete the current credentials, allowing you to set it up once again.
@@ -67,7 +67,7 @@ When these have been supplied, the server will be ready to catch files! You can 
 If you need to remove a *thrower*, run the following command:
 
 ```
-./catch --remove
+./catch -r
 ```
 
 You will then be guided through the process to remove *thrower*s.
